@@ -1,5 +1,6 @@
 import React from 'react';
 import DentalCare from '../DentalCare/DentalCare';
+import FeaturedTestimonial from '../FeaturedTestimonial/FeaturedTestimonial';
 import HeroBanner from '../HeroBanner/HeroBanner';
 import MakeAppointment from '../MakeAppointment/MakeAppointment';
 import OfficeInfo from '../OfficeInfo/OfficeInfo';
@@ -13,6 +14,7 @@ const Home = () => {
             <ServicesInfo></ServicesInfo>
             <DentalCare></DentalCare>
             <MakeAppointment></MakeAppointment>
+            <FeaturedTestimonial></FeaturedTestimonial>
         </div>
     );
 };
