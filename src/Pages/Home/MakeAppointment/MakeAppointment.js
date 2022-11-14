@@ -3,7 +3,7 @@ import doctor from '../../../Assets/images/doctor-small.png';
 
 const MakeAppointment = () => {
     return (
-        <section className='relative text-white bg-home-appointment-bg my-20 xl:my-32'>
+        <section className='relative text-white bg-home-appointment my-20 xl:my-32'>
             <div className="flex flex-col lg:flex-row items-center gap-8 md:gap-0 relative container max-w-screen-xl mx-auto px-6 lg:px-0">
                 <img src={doctor} alt="treatment" className="rounded-lg lg:w-1/2 -mt-24 hidden lg:block" />
                 <div className='lg:w-1/2 lg:pr-24 flex flex-col gap-6 py-9'>
