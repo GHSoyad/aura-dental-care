@@ -4,7 +4,11 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'home-appointment-bg': "url('/src/Assets/images/appointment.png')"
+      }
+    }
   },
   daisyui: {
     themes: [
@@ -15,7 +19,7 @@ module.exports = {
           "accent": "#3A4256",
           "neutral": "#3D4451",
           "base-100": "#ffffff",
-        },
+        }
       },
     ],
   },

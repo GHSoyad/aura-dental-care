@@ -24,7 +24,7 @@ const ServicesInfo = () => {
         }
     ]
     return (
-        <section className='text-center my-20 lg:my-32'>
+        <section className='text-center my-20 lg:my-32 container max-w-screen-xl mx-auto px-6 lg:px-0'>
             <h3 className='text-xl font-bold text-primary mb-2'>OUR SERVICES</h3>
             <h2 className='text-4xl mb-16'>Services We Provide</h2>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
