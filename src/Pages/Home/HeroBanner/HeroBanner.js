@@ -3,7 +3,7 @@ import banner from '../../../Assets/images/chair.png';
 
 const HeroBanner = () => {
     return (
-        <section className="card md:card-side bg-base-100 flex-col-reverse gap-6 relative py-52" style={{
+        <section className="card md:card-side bg-base-100 flex-col-reverse gap-6 relative py-8 lg:py-44 mb-4 md:mb-0" style={{
             backgroundImage: `url(${banner})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover'
         }}>
             <div className='absolute inset-0 bg-white/90'></div>
