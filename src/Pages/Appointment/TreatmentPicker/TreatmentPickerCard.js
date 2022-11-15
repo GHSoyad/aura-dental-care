@@ -1,18 +1,20 @@
 import React from 'react';
 
-const TimePickerCard = ({ time }) => {
+const TreatmentPickerCard = ({ time, setBookAppointment }) => {
+
     const { name, slots } = time;
-    console.log(slots.length);
+
     return (
         <div className='text-center flex flex-col gap-2 rounded-xl shadow-lg py-10'>
             <p className='font-semibold text-xl text-primary'>{name}</p>
             <p>{slots.length ? slots[0] : 'No slots available'}</p>
             <p className='text-sm'>{slots.length} {slots.length > 1 ? 'Spaces' : 'Space'}  Available</p>
             <div>
-                <button className='btn btn-primary bg-gradient-to-r from-primary to-secondary text-white mt-2'>Book Appointment</button>
+                {/* The button to open modal */}
+                <label onClick={() => setBookAppointment(time)} htmlFor="booking-modal" disabled={slots.length === 0} className='btn btn-primary text-white mt-2'>Book Appointment</label>
             </div>
         </div>
     );
 };
 
-export default TimePickerCard;
+export default TreatmentPickerCard;

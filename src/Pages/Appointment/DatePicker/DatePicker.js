@@ -14,6 +14,7 @@ const DatePicker = ({ selectedDate, setSelectedDate }) => {
                         mode="single"
                         selected={selectedDate}
                         onSelect={setSelectedDate}
+                        required
                     ></DayPicker>
                 </div>
                 <div className='md:w-1/2 flex items-center'>
