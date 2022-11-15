@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import chair from '../../../Assets/images/chair.png';
 import 'react-day-picker/dist/style.css';
 import { DayPicker } from 'react-day-picker';
-import { format } from 'date-fns';
 
-const DatePicker = () => {
-    const [selectedDate, setSelectedDate] = useState(new Date());
+const DatePicker = ({ selectedDate, setSelectedDate }) => {
 
-    console.log(selectedDate)
     return (
         <section className="relative py-8 lg:py-44 mb-4 md:mb-0 bg-home-hero bg-cover bg-center">
             <div className='absolute inset-0 bg-white/90'></div>
@@ -23,10 +20,6 @@ const DatePicker = () => {
                     <img src={chair} alt="Album" className='w-full' />
                 </div>
             </div>
-            {
-                selectedDate &&
-                <p className='relative text-center mt-10 text-2xl font-medium text-primary'>Available Appointments on {format(selectedDate, 'PP')}.</p>
-            }
         </section>
     );
 };
