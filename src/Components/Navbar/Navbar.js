@@ -15,12 +15,12 @@ const Navbar = () => {
 
     return (
         <div className='bg-base-100'>
-            <div className="navbar container max-w-screen-xl mx-auto justify-between font-medium">
+            <div className="navbar container max-w-screen-xl mx-auto justify-between font-medium px-2 xl:px-0 py-5">
                 <div className='flex items-center justify-center gap-2'>
-                    <Link to='/'><img src={logo} alt="" className='w-10' /></Link>
-                    <Link to='/' className="leading-none">
-                        <span className='text-3xl'>Aurora </span>
-                        <span>Dental Care</span>
+                    <Link to='/'><img src={logo} alt="" className='w-12' /></Link>
+                    <Link to='/' className="leading-none font-serif font-bold">
+                        <span className='text-3xl text-primary'>Aurora</span>
+                        <span className='text-secondary block -mt-1'>Dental Care</span>
                     </Link>
                 </div>
                 <div className="">

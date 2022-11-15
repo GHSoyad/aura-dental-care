@@ -28,7 +28,7 @@ const FeaturedTestimonial = () => {
     ]
 
     return (
-        <section className='container max-w-screen-xl mx-auto px-6 lg:px-0 my-20 lg:my-32'>
+        <section className='container max-w-screen-xl mx-auto px-6 xl:px-0 my-20 lg:my-32'>
             <div className='flex justify-between gap-2'>
                 <div>
                     <h4 className='font-bold text-xl text-primary'>Testimonial</h4>

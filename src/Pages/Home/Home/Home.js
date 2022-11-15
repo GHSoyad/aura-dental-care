@@ -9,7 +9,7 @@ import ServicesInfo from '../ServicesInfo/ServicesInfo';
 
 const Home = () => {
     return (
-        <div className=''>
+        <div>
             <HeroBanner></HeroBanner>
             <OfficeInfo></OfficeInfo>
             <ServicesInfo></ServicesInfo>
