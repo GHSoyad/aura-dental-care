@@ -14,7 +14,7 @@ const TreatmentPicker = ({ selectedDate }) => {
             .then(data => setTreatments(data))
     }, [])
 
-    const handleBooking = (event) => {
+    const handleBooking = (event, treatment) => {
         event.preventDefault();
         const form = event.target;
         const time = form.time.value;
@@ -23,6 +23,7 @@ const TreatmentPicker = ({ selectedDate }) => {
         const email = form.userEmail.value;
 
         const appointmentDetails = {
+            treatment,
             selectedDate,
             time,
             name,

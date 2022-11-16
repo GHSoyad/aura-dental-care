@@ -13,7 +13,7 @@ const BookAppointment = ({ bookAppointment, selectedDate, handleBooking }) => {
                 <div className="modal-box relative">
                     <label htmlFor="booking-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                     <h3 className="text-xl font-semibold text-left mb-10">{name}</h3>
-                    <form onSubmit={handleBooking} className='flex flex-col gap-6'>
+                    <form onSubmit={(e) => handleBooking(e, name)} className='flex flex-col gap-6'>
                         <input type="text" value={format(selectedDate, 'PP')} className="input input-bordered w-full input-disabled" readOnly />
                         <select name='time' className="select select-bordered w-full">
                             {
