@@ -2,26 +2,36 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 import GoogleSignIn from '../../Firebase/GoogleSignIn';
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { RiEyeOffFill, RiEyeFill } from "react-icons/ri";
+import toast from 'react-hot-toast';
 
 const Login = () => {
 
-    const { signInWithEmail } = useContext(AuthContext);
+    const { signInWithEmail, setUserInfo, setLoading } = useContext(AuthContext);
     const { register, handleSubmit } = useForm();
     const [showPassword, setShowPassword] = useState(false);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
 
     const handleSignIn = (data) => {
         const email = data.email;
         const password = data.password;
-        console.log(email, password)
 
         signInWithEmail(email, password)
             .then(userCredential => {
                 const user = userCredential.user;
-                console.log(user)
+                setUserInfo(user);
+                navigate(from, { replace: true })
             })
-            .catch(error => console.log((error)))
+            .catch(error => {
+                toast.error(error.message)
+            })
+            .finally(() => {
+                setLoading(false);
+            })
     }
 
     return (
