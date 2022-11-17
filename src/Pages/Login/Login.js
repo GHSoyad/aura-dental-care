@@ -1,12 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 import GoogleSignIn from '../../Firebase/GoogleSignIn';
 import { useForm } from "react-hook-form";
+import { Link } from 'react-router-dom';
+import { RiEyeOffFill, RiEyeFill } from "react-icons/ri";
 
 const Login = () => {
 
     const { signInWithEmail } = useContext(AuthContext);
     const { register, handleSubmit } = useForm();
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSignIn = (data) => {
         const email = data.email;
@@ -32,13 +35,21 @@ const Login = () => {
                     </div>
                     <div>
                         <label className='font-medium text-sm label'>Password</label>
-                        <input {...register("password", { required: true })} type="password" placeholder="Password" className="input input-bordered w-full max-w-md" />
+                        <label className="input-group">
+                            <input {...register("password", { required: true })} type={showPassword ? "text" : "password"} placeholder="Password" className="input input-bordered w-full max-w-md" />
+                            <span onClick={() => setShowPassword(!showPassword)} className="text-lg">
+                                {
+                                    showPassword ? <RiEyeFill></RiEyeFill> :
+                                        <RiEyeOffFill></RiEyeOffFill>
+                                }
+                            </span>
+                        </label>
                     </div>
                     <p className='text-xs font-medium'>Forgot Password?</p>
                     <button type='submit' className='btn'>Login</button>
                 </form>
-                <p className='text-center text-sm mt-4'>New to Aurora Dental Care? <span className='text-primary'>Create new account</span></p>
-                <div className="divider my-8">OR</div>
+                <p className='text-center text-sm mt-4'>New to Aurora Dental Care? <Link to='/register' className='text-primary font-medium'>Create new account.</Link></p>
+                <div className="divider my-6">OR</div>
                 <GoogleSignIn></GoogleSignIn>
             </div>
         </div>
