@@ -1,9 +1,12 @@
 import { format } from 'date-fns';
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../../Contexts/AuthProvider/AuthProvider';
 
 const BookAppointment = ({ bookAppointment, selectedDate, handleBooking }) => {
 
     const { name, slots } = bookAppointment;
+    const { userInfo } = useContext(AuthContext);
+    console.log(userInfo)
 
     return (
         <>
@@ -20,9 +23,9 @@ const BookAppointment = ({ bookAppointment, selectedDate, handleBooking }) => {
                                 slots.map((slot, index) => <option key={index} value={slot}>{slot}</option>)
                             }
                         </select>
-                        <input name='userName' type="text" placeholder="Full Name" className="input input-bordered w-full" required />
+                        <input name='userName' type="text" value={userInfo?.displayName ? userInfo?.displayName : 'Name not found'} placeholder="Full Name" className="input input-bordered w-full input-disabled" readOnly />
+                        <input name='userEmail' type="text" value={userInfo?.email} placeholder="Email" className="input input-bordered w-full input-disabled" readOnly />
                         <input name='userPhone' type="text" placeholder="Phone Number" className="input input-bordered w-full" required />
-                        <input name='userEmail' type="text" placeholder="Email" className="input input-bordered w-full" required />
                         <button type='submit' className='btn'>Submit</button>
                     </form>
                 </div>

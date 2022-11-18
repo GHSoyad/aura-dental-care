@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
+import Loader from '../../Components/Loader/Loader';
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
-import { RiLoaderFill } from "react-icons/ri";
 
 const PrivateRoute = ({ children }) => {
 
@@ -10,10 +10,7 @@ const PrivateRoute = ({ children }) => {
 
     if (loading) {
         return (
-            <div className='text-center font-medium flex justify-center items-center text-xl min-h-[calc(100vh_-_380px)]'>
-                <RiLoaderFill className="animate-spin mr-3 text-primary text-3xl"></RiLoaderFill>
-                Logging in...
-            </div>
+            <Loader>Logging in...</Loader>
         )
     }
 
