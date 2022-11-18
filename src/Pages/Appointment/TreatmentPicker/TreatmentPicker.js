@@ -4,14 +4,16 @@ import TreatmentPickerCard from './TreatmentPickerCard';
 import BookAppointment from './BookAppointment';
 import { useQuery } from '@tanstack/react-query';
 import Loader from '../../../Components/Loader/Loader';
+import toast from 'react-hot-toast';
 
 const TreatmentPicker = ({ selectedDate }) => {
 
+    const appointmentDate = format(selectedDate, 'PP');
     const [bookAppointment, setBookAppointment] = useState(null);
 
-    const { isLoading, error, data: appointmentsOptions } = useQuery({
-        queryKey: ['appointmentsOptions'],
-        queryFn: () => fetch('http://localhost:5000/appointmentsOptions')
+    const { isLoading, error, data: appointmentsOptions, refetch } = useQuery({
+        queryKey: ['appointmentsOptions', appointmentDate],
+        queryFn: () => fetch(`http://localhost:5000/appointmentsOptions?date=${appointmentDate}`)
             .then(res => res.json())
     })
 
@@ -22,40 +24,57 @@ const TreatmentPicker = ({ selectedDate }) => {
     const handleBooking = (event, treatment) => {
         event.preventDefault();
         const form = event.target;
-        const time = form.time.value;
-        const name = form.userName.value;
-        const phone = form.userPhone.value;
-        const email = form.userEmail.value;
+        const appointmentTime = form.time.value;
+        const userName = form.userName.value;
+        const userPhone = form.userPhone.value;
+        const userEmail = form.userEmail.value;
 
-        const appointmentDetails = {
+        const bookingDetails = {
             treatment,
-            selectedDate,
-            time,
-            name,
-            phone,
-            email
+            appointmentDate,
+            appointmentTime,
+            userName,
+            userPhone,
+            userEmail
         }
 
-        console.log(appointmentDetails);
-        setBookAppointment(null);
+        fetch('http://localhost:5000/bookings', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(bookingDetails)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.acknowledged) {
+                    toast.success(`Booked Appointment for ${treatment}`)
+                    setBookAppointment(null);
+                    refetch();
+                } else {
+                    toast.error(data.message)
+                }
+            })
+            .catch(error => console.log(error))
     }
 
     return (
         <div className='container max-w-screen-xl mx-auto px-6 xl:px-0'>
-            <p className='relative text-center text-2xl font-medium text-primary my-16'>Available Appointments on {selectedDate && format(selectedDate, 'PP')}</p>
+            <p className='relative text-center text-2xl font-medium text-primary my-16'>Available Appointments on {appointmentDate}</p>
             {
                 isLoading ?
-                    <Loader></Loader>
+                    <Loader>Loading data...</Loader>
                     :
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10'>
                         {
-                            appointmentsOptions.map(time => <TreatmentPickerCard key={time._id} time={time} selectedDate={selectedDate} setBookAppointment={setBookAppointment}></TreatmentPickerCard>)
+                            appointmentsOptions.map(time => <TreatmentPickerCard key={time._id} time={time} setBookAppointment={setBookAppointment}></TreatmentPickerCard>)
                         }
                     </div>
             }
             {
                 bookAppointment &&
-                <BookAppointment bookAppointment={bookAppointment} selectedDate={selectedDate} handleBooking={handleBooking}></BookAppointment>
+                <BookAppointment bookAppointment={bookAppointment} appointmentDate={appointmentDate} handleBooking={handleBooking}></BookAppointment>
             }
         </div>
     );

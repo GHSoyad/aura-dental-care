@@ -66,18 +66,18 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div className="hidden lg:flex">
-                    <ul className="menu menu-horizontal p-0">
+                    <ul className="menu menu-horizontal p-0 items-center">
                         {menuLinks}
                         {
                             (userInfo && userInfo.uid) &&
-                            <li>
+                            <div className='w-8 h-8 rounded-full flex items-center justify-center ring ring-primary ml-2 overflow-hidden'>
                                 <Link>{
                                     userInfo?.photoURL ?
-                                        <img src="https://placeimg.com/80/80/people" alt='user' className="w-10 rounded-full" />
+                                        <img src={userInfo?.photoURL} alt='user' />
                                         :
-                                        <RiUser3Fill className='text-xl'></RiUser3Fill>
+                                        <RiUser3Fill className='text-2xl'></RiUser3Fill>
                                 }</Link>
-                            </li>
+                            </div>
                         }
 
                     </ul>
