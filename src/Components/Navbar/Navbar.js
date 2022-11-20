@@ -25,10 +25,9 @@ const Navbar = () => {
     const menuLinks = <React.Fragment>
         <li><NavLink to='/'>Home</NavLink></li>
         <li><NavLink to='/appointment'>Appointment</NavLink></li>
-        <li><NavLink to='/about'>About</NavLink></li>
         {userInfo && userInfo.uid ?
             <>
-                <li><NavLink to='/my-reviews'>My Reviews</NavLink></li>
+                <li><NavLink to='/dashboard'>Dashboard</NavLink></li>
                 <li onClick={handleLogOut}><Link>Logout</Link></li>
             </>
             :
@@ -59,7 +58,7 @@ const Navbar = () => {
                             {
                                 (userInfo && userInfo.uid) &&
                                 <>
-                                    <li><NavLink to='/'>Profile</NavLink></li>
+                                    <li><Link to='/'>Profile</Link></li>
                                 </>
                             }
                         </ul>

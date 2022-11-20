@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { AuthContext } from '../../../Contexts/AuthProvider/AuthProvider';
 
 const BookAppointment = ({ bookAppointment, appointmentDate, handleBooking }) => {
 
     const { name, slots } = bookAppointment;
     const { userInfo } = useContext(AuthContext);
+    const location = useLocation();
 
     return (
         <>
@@ -22,10 +24,16 @@ const BookAppointment = ({ bookAppointment, appointmentDate, handleBooking }) =>
                                 slots.map((slot, index) => <option key={index} value={slot}>{slot}</option>)
                             }
                         </select>
-                        <input name='userName' type="text" defaultValue={userInfo?.displayName ? userInfo?.displayName : ''} placeholder="Full Name" className={`input input-bordered w-full ${userInfo?.displayName && "input-disabled"}`} readOnly={userInfo?.displayName} />
-                        <input name='userEmail' type="text" value={userInfo?.email} placeholder="Email" className="input input-bordered w-full input-disabled" readOnly />
-                        <input name='userPhone' type="text" placeholder="Phone Number" className="input input-bordered w-full" required />
-                        <button type='submit' className='btn'>Submit</button>
+                        {userInfo?.email ?
+                            <>
+                                <input name='userName' type="text" defaultValue={userInfo?.displayName ? userInfo?.displayName : ''} placeholder="Full Name" className={`input input-bordered w-full ${userInfo?.displayName && "input-disabled"}`} readOnly={userInfo?.displayName} />
+                                <input name='userEmail' type="text" value={userInfo?.email} placeholder="Email" className="input input-bordered w-full input-disabled" readOnly />
+                                <input name='userPhone' type="text" placeholder="Phone Number" className="input input-bordered w-full" required />
+                                <button type='submit' className='btn'>Book Appointment</button>
+                            </>
+                            :
+                            <Link to='/login' state={{ from: location }} replace ><button className='btn w-full'>Login to Book Appointment</button></Link>
+                        }
                     </form>
                 </div>
             </div>

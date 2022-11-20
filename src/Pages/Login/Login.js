@@ -47,7 +47,7 @@ const Login = () => {
                         <label className='font-medium text-sm label'>Password</label>
                         <label className="input-group">
                             <input {...register("password", { required: true })} type={showPassword ? "text" : "password"} placeholder="Password" className="input input-bordered w-full max-w-md" />
-                            <span onClick={() => setShowPassword(!showPassword)} className="text-lg">
+                            <span onClick={() => setShowPassword(!showPassword)} className="text-xl">
                                 {
                                     showPassword ? <RiEyeFill></RiEyeFill> :
                                         <RiEyeOffFill></RiEyeOffFill>
