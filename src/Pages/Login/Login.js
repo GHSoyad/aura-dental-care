@@ -1,20 +1,28 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 import GoogleSignIn from '../../Firebase/GoogleSignIn';
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { RiEyeOffFill, RiEyeFill } from "react-icons/ri";
 import toast from 'react-hot-toast';
+import useToken from '../../Hooks/useToken';
 
 const Login = () => {
 
     const { signInWithEmail, setUserInfo, setLoading } = useContext(AuthContext);
     const { register, handleSubmit } = useForm();
     const [showPassword, setShowPassword] = useState(false);
-
+    const [loginEmail, setLoginEmail] = useState('');
+    const [token] = useToken(loginEmail);
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
+
+    useEffect(() => {
+        if (token) {
+            navigate(from, { replace: true });
+        }
+    }, [token, from, navigate])
 
     const handleSignIn = (data) => {
         const email = data.email;
@@ -24,7 +32,7 @@ const Login = () => {
             .then(userCredential => {
                 const user = userCredential.user;
                 setUserInfo(user);
-                navigate(from, { replace: true })
+                setLoginEmail(email);
             })
             .catch(error => {
                 toast.error(error.message)
@@ -60,7 +68,7 @@ const Login = () => {
                 </form>
                 <p className='text-center text-sm mt-4'>New to Aurora Dental Care? <Link to='/register' className='text-primary font-medium'>Create new account.</Link></p>
                 <div className="divider my-6">OR</div>
-                <GoogleSignIn></GoogleSignIn>
+                <GoogleSignIn from={from}></GoogleSignIn>
             </div>
         </div>
     );

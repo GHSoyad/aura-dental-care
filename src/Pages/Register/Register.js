@@ -1,10 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import GoogleSignIn from '../../Firebase/GoogleSignIn';
 import { useForm } from "react-hook-form";
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 import { RiErrorWarningLine, RiCheckFill, RiEyeOffFill, RiEyeFill } from "react-icons/ri";
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
+import useToken from '../../Hooks/useToken';
 
 const Register = () => {
 
@@ -13,28 +14,32 @@ const Register = () => {
     const [isCorrect, setIsCorrect] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+    const [signInEmail, setSignInEmail] = useState('');
+    const [token] = useToken(signInEmail);
+
+    useEffect(() => {
+        if (token) {
+            navigate('/');
+        }
+    }, [token, navigate]);
 
     const handleCreateUser = (data) => {
         const email = data.email;
         const password = data.password;
         const name = data.name;
-        const profile = { name }
-        console.log(data)
+        const profile = { name };
 
         createUserWithEmail(email, password)
             .then(userCredential => {
-                const user = userCredential.user;
                 updateUserProfile(profile)
                     .then(() => {
                         saveUserInfo(data.name, data.email);
                         toast.success('Registered successfully');
-                        navigate('/')
                     })
-                    .catch((error) => console.log(error))
-                console.log(user)
+                    .catch((error) => toast.error(error.message));
             })
             .catch(error => {
-                toast.error(error.message)
+                toast.error(error.message);
             })
     }
 
@@ -52,8 +57,12 @@ const Register = () => {
             body: JSON.stringify(user)
         })
             .then(res => res.json())
-            .then(data => console.log(data))
-            .catch(error => console.log(error))
+            .then(data => {
+                if (data.acknowledged) {
+                    setSignInEmail(email);
+                }
+            })
+            .catch(error => toast.error(error.message))
     }
 
     return (
@@ -113,7 +122,7 @@ const Register = () => {
                 </form>
                 <p className='text-center text-sm mt-4'>Already have an Account? <Link to='/login' className='text-primary font-medium'>Login.</Link></p>
                 <div className="divider my-6">OR</div>
-                <GoogleSignIn></GoogleSignIn>
+                <GoogleSignIn from='/'></GoogleSignIn>
             </div>
         </div>
     );

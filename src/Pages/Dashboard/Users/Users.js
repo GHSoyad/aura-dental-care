@@ -4,13 +4,15 @@ import Loader from '../../../Components/Loader/Loader';
 
 const Users = () => {
 
-    const { isLoading, error, data } = useQuery({
+    const { isLoading, data } = useQuery({
         queryKey: ['users'],
-        queryFn: () => fetch('http://localhost:5000/users')
+        queryFn: () => fetch('http://localhost:5000/users', {
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('auroraSecretToken')}`
+            }
+        })
             .then(res => res.json())
     })
-
-    console.log(data)
 
     return (
         <div className="overflow-x-auto border rounded-lg">
