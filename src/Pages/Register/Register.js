@@ -4,31 +4,57 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 import { RiErrorWarningLine, RiCheckFill, RiEyeOffFill, RiEyeFill } from "react-icons/ri";
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Register = () => {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { createUserWithEmail } = useContext(AuthContext);
+    const { createUserWithEmail, updateUserProfile } = useContext(AuthContext);
     const [isCorrect, setIsCorrect] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
 
     const handleCreateUser = (data) => {
         const email = data.email;
         const password = data.password;
+        const name = data.name;
+        const profile = { name }
         console.log(data)
 
         createUserWithEmail(email, password)
             .then(userCredential => {
                 const user = userCredential.user;
+                updateUserProfile(profile)
+                    .then(() => {
+                        saveUserInfo(data.name, data.email);
+                        toast.success('Registered successfully');
+                        navigate('/')
+                    })
+                    .catch((error) => console.log(error))
                 console.log(user)
             })
             .catch(error => {
-                console.log(error.message)
                 toast.error(error.message)
             })
     }
 
+    const saveUserInfo = (name, email) => {
+        const user = {
+            name,
+            email
+        }
+
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(error => console.log(error))
+    }
 
     return (
         <div className='container max-w-screen-xl mx-auto px-6 lg:px-0 flex justify-center items-center'>
