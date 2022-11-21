@@ -1,10 +1,18 @@
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const AddDoctor = () => {
 
     const { register, handleSubmit } = useForm();
+    const navigate = useNavigate();
+    const { isLoading, data: treatments } = useQuery({
+        queryKey: ['treatments'],
+        queryFn: () => fetch('http://localhost:5000/treatments')
+            .then(res => res.json())
+    })
 
     const handleAddDoctor = (data) => {
         const image = data.image[0];
@@ -39,6 +47,10 @@ const AddDoctor = () => {
                         .then(data => {
                             if (data.acknowledged) {
                                 toast.success('Doctor Added')
+                                navigate('/dashboard/manage-doctor')
+                            }
+                            if (data.message) {
+                                toast.error(data.message)
                             }
                         })
                         .catch(error => console.log(error))
@@ -54,21 +66,30 @@ const AddDoctor = () => {
 
             <form onSubmit={handleSubmit(handleAddDoctor)} className='flex flex-col gap-4 max-w-md'>
                 <div>
-                    <label className='font-medium text-sm label'>Email</label>
-                    <input {...register("email")} type="email" placeholder="Email" className="input input-bordered w-full" required />
-                </div>
-                <div>
                     <label className='font-medium text-sm label'>Name</label>
                     <input {...register("name")} type="text" placeholder="Name" className="input input-bordered w-full" required />
+                </div>
+                <div>
+                    <label className='font-medium text-sm label'>Email</label>
+                    <input {...register("email")} type="email" placeholder="Email" className="input input-bordered w-full" required />
                 </div>
                 <div>
                     <label className='font-medium text-sm label'>Image</label>
                     <input {...register('image')} type="file" className="file-input file-input-bordered w-full" required />
                 </div>
                 <select {...register('specialty')} className="select select-bordered w-full mt-2" required>
-                    <option value=''>Select specialty</option>
-                    <option value='han'>Han Solo</option>
-                    <option value='gre'>Greedo</option>
+                    {
+                        isLoading ?
+                            <option value=''>Loading...</option>
+                            :
+                            <>
+                                <option value=''>Select specialty</option>
+                                {
+                                    treatments.map(treatment => <option key={treatment._id} value={treatment.name}>{treatment.name}</option>)
+                                }
+                            </>
+
+                    }
                 </select>
                 <button type='submit' className='btn mt-4'>Add Doctor</button>
             </form>

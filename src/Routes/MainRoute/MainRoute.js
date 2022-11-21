@@ -4,6 +4,7 @@ import MainLayout from "../../Layouts/MainLayout/MainLayout";
 import Appointment from "../../Pages/Appointment/Appointment/Appointment";
 import AddDoctor from "../../Pages/Dashboard/AddDoctor/AddDoctor";
 import Dashboard from "../../Pages/Dashboard/Dashboard/Dashboard";
+import ManageDoctor from "../../Pages/Dashboard/ManageDoctor/ManageDoctor";
 import Users from "../../Pages/Dashboard/Users/Users";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
@@ -48,7 +49,11 @@ const router = createBrowserRouter([
             },
             {
                 path: '/dashboard/add-doctor',
-                element: <AddDoctor></AddDoctor>
+                element: <AdminRoute><AddDoctor></AddDoctor></AdminRoute>
+            },
+            {
+                path: '/dashboard/manage-doctor',
+                element: <AdminRoute><ManageDoctor></ManageDoctor></AdminRoute>
             }
         ]
     }
