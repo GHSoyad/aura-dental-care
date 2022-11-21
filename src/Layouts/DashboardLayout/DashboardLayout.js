@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { RiCloseFill, RiMenuFill, RiCalendarCheckFill, RiGroupFill } from 'react-icons/ri';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import Navbar from '../../Components/Navbar/Navbar';
+import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
+import useAdmin from '../../Hooks/useAdmin';
 
 const DashboardLayout = () => {
 
+    const { userInfo } = useContext(AuthContext);
+    const [isAdmin] = useAdmin(userInfo?.email);
     const [isOpen, setIsOpen] = useState(false);
+
     return (
         <div>
             <Navbar></Navbar>
-
             <div className='p-2'>
                 <label htmlFor="my-drawer-2" className="btn-circle btn-primary swap swap-rotate lg:hidden text-2xl text-white" onClick={() => setIsOpen(!isOpen)}>
                     {/* <!-- this hidden checkbox controls the state --> */}
@@ -30,8 +34,11 @@ const DashboardLayout = () => {
                     <label htmlFor="my-drawer-2" className="drawer-overlay" onClick={() => setIsOpen(!isOpen)}></label>
                     <ul className="menu p-4 w-80 bg-neutral text-white shadow-lg lg:rounded-lg">
                         {/* <!-- Sidebar content here --> */}
-                        <li className='hover:bg-primary rounded-lg'><NavLink to='/dashboard/users'><RiGroupFill></RiGroupFill> Users</NavLink></li>
                         <li><Link><RiCalendarCheckFill className='text-lg'></RiCalendarCheckFill> Appointments</Link></li>
+                        {
+                            isAdmin &&
+                            <li className='hover:bg-primary rounded-lg'><NavLink to='/dashboard/users'><RiGroupFill></RiGroupFill> Users</NavLink></li>
+                        }
                     </ul>
                 </div>
             </div>
