@@ -19,7 +19,7 @@ const AddDoctor = () => {
         const formData = new FormData();
         formData.append('image', image);
 
-        fetch(`https://api.imgbb.com/1/upload?key=38ec78febea1a1afd179071af6a9be84`, {
+        fetch(`https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgbb_API_KEY}`, {
             method: 'POST',
             body: formData
         })

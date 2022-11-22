@@ -33,7 +33,6 @@ const ManageDoctor = () => {
                     refetch();
                 }
             })
-
     }
 
     return (

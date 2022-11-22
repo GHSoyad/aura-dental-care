@@ -28,6 +28,7 @@ const TreatmentPicker = ({ selectedDate }) => {
         const userName = form.userName.value;
         const userPhone = form.userPhone.value;
         const userEmail = form.userEmail.value;
+        const cost = form.cost.value;
 
         const bookingDetails = {
             treatment,
@@ -35,7 +36,8 @@ const TreatmentPicker = ({ selectedDate }) => {
             appointmentTime,
             userName,
             userPhone,
-            userEmail
+            userEmail,
+            cost
         }
 
         fetch('http://localhost:5000/bookings', {
