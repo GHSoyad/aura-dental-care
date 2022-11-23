@@ -4,6 +4,7 @@ import MainLayout from "../../Layouts/MainLayout/MainLayout";
 import Appointment from "../../Pages/Appointment/Appointment/Appointment";
 import AddDoctor from "../../Pages/Dashboard/AddDoctor/AddDoctor";
 import AllAppointments from "../../Pages/Dashboard/AllAppointments/AllAppointments";
+import Checkout from "../../Pages/Dashboard/Checkout/Checkout";
 import Dashboard from "../../Pages/Dashboard/Dashboard/Dashboard";
 import ManageDoctor from "../../Pages/Dashboard/ManageDoctor/ManageDoctor";
 import MyAppointments from "../../Pages/Dashboard/MyAppointments/MyAppointments";
@@ -64,6 +65,17 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/all-appointments',
                 element: <AllAppointments></AllAppointments>
+            },
+            {
+                path: '/dashboard/checkout/:id',
+                loader: ({ params }) => {
+                    return fetch(`https://aurora-dental-care-server.vercel.app/booking/${params.id}`, {
+                        headers: {
+                            authorization: `Bearer ${localStorage.getItem('auroraSecretToken')}`
+                        }
+                    })
+                },
+                element: <Checkout></Checkout>
             }
         ]
     }

@@ -4,7 +4,7 @@ import { AuthContext } from '../../../Contexts/AuthProvider/AuthProvider';
 
 const BookAppointment = ({ bookAppointment, appointmentDate, handleBooking }) => {
 
-    const { name, slots, price } = bookAppointment;
+    const { name, slots, cost } = bookAppointment;
     const { userInfo } = useContext(AuthContext);
     const location = useLocation();
 
@@ -21,7 +21,7 @@ const BookAppointment = ({ bookAppointment, appointmentDate, handleBooking }) =>
                             <input type="text" value={appointmentDate} className="input input-bordered input-disabled col-span-2" readOnly />
                             <label className="input-group">
                                 <span className='font-bold'>$</span>
-                                <input name='cost' type="number" value={price} className="input input-bordered input-disabled w-full px-2 sm:px-4" readOnly />
+                                <input name='cost' type="number" value={cost} className="input input-bordered input-disabled w-full px-2 sm:px-4" readOnly />
                             </label>
                         </div>
                         <select name='time' className="select select-bordered w-full" required>
@@ -34,7 +34,7 @@ const BookAppointment = ({ bookAppointment, appointmentDate, handleBooking }) =>
                             <>
                                 <input name='userName' type="text" defaultValue={userInfo?.displayName ? userInfo?.displayName : ''} placeholder="Full Name" className={`input input-bordered w-full ${userInfo?.displayName && "input-disabled"}`} readOnly={userInfo?.displayName} />
                                 <input name='userEmail' type="text" value={userInfo?.email} placeholder="Email" className="input input-bordered w-full input-disabled" readOnly />
-                                <input name='userPhone' type="text" placeholder="Phone Number" className="input input-bordered w-full" required />
+                                <input name='userPhone' type="number" placeholder="Phone Number" className="input input-bordered w-full" required />
                                 <button type='submit' className='btn'>Book Appointment</button>
                             </>
                             :

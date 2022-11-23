@@ -13,7 +13,7 @@ const TreatmentPicker = ({ selectedDate }) => {
 
     const { isLoading, error, data: appointmentsOptions, refetch } = useQuery({
         queryKey: ['appointmentsOptions', appointmentDate],
-        queryFn: () => fetch(`http://localhost:5000/appointmentsOptions?date=${appointmentDate}`)
+        queryFn: () => fetch(`https://aurora-dental-care-server.vercel.app/appointmentsOptions?date=${appointmentDate}`)
             .then(res => res.json())
     })
 
@@ -40,7 +40,7 @@ const TreatmentPicker = ({ selectedDate }) => {
             cost
         }
 
-        fetch('http://localhost:5000/bookings', {
+        fetch('https://aurora-dental-care-server.vercel.app/bookings', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

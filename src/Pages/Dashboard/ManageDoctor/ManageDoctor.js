@@ -9,7 +9,7 @@ const ManageDoctor = () => {
     const [doctorInfo, setDoctorInfo] = useState(null);
     const { isLoading, data: doctors, refetch } = useQuery({
         queryKey: ['doctors'],
-        queryFn: () => fetch('http://localhost:5000/doctors', {
+        queryFn: () => fetch('https://aurora-dental-care-server.vercel.app/doctors', {
             headers: {
                 authorization: `Bearer ${localStorage.getItem('auroraSecretToken')}`
             }
@@ -20,7 +20,7 @@ const ManageDoctor = () => {
     const handleDeleteDoctor = (data) => {
 
         const id = data._id;
-        fetch(`http://localhost:5000/doctors/${id}`, {
+        fetch(`https://aurora-dental-care-server.vercel.app/doctors/${id}`, {
             method: 'DELETE',
             headers: {
                 authorization: `Bearer ${localStorage.getItem('auroraSecretToken')}`

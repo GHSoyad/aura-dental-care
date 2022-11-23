@@ -6,7 +6,7 @@ const AllAppointments = () => {
     const { isLoading, data: appointments } = useQuery({
         queryKey: ['all-appointments'],
         queryFn: () =>
-            fetch('http://localhost:5000/bookings', {
+            fetch('https://aurora-dental-care-server.vercel.app/bookings', {
                 headers: {
                     authorization: `Bearer ${localStorage.getItem('auroraSecretToken')}`
                 }

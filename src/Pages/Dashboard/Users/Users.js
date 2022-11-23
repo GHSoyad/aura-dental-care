@@ -7,7 +7,7 @@ const Users = () => {
 
     const { isLoading, data, refetch } = useQuery({
         queryKey: ['users'],
-        queryFn: () => fetch('http://localhost:5000/users', {
+        queryFn: () => fetch('https://aurora-dental-care-server.vercel.app/users', {
             headers: {
                 authorization: `Bearer ${localStorage.getItem('auroraSecretToken')}`
             }
@@ -16,7 +16,7 @@ const Users = () => {
     })
 
     const handleUserRole = (id) => {
-        fetch(`http://localhost:5000/users/${id}`, {
+        fetch(`https://aurora-dental-care-server.vercel.app/users/${id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',

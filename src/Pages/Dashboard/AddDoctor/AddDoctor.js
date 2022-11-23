@@ -10,7 +10,7 @@ const AddDoctor = () => {
     const navigate = useNavigate();
     const { isLoading, data: treatments } = useQuery({
         queryKey: ['treatments'],
-        queryFn: () => fetch('http://localhost:5000/treatments')
+        queryFn: () => fetch('https://aurora-dental-care-server.vercel.app/treatments')
             .then(res => res.json())
     })
 
@@ -35,7 +35,7 @@ const AddDoctor = () => {
                         name, email, imgURL, specialty
                     }
 
-                    fetch(`http://localhost:5000/doctors`, {
+                    fetch(`https://aurora-dental-care-server.vercel.app/doctors`, {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json',
